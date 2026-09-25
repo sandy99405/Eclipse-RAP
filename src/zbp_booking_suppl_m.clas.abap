@@ -1,0 +1,5 @@
+CLASS zbp_booking_suppl_m DEFINITION PUBLIC ABSTRACT FINAL FOR BEHAVIOR OF zi_travel_root_inch.
+ENDCLASS.
+
+CLASS zbp_booking_suppl_m IMPLEMENTATION.
+ENDCLASS.
