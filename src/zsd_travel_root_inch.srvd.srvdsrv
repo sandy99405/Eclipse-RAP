@@ -1,0 +1,6 @@
+@EndUserText.label: 'Service Definition for Travel'
+define service ZSD_TRAVEL_ROOT_INCH {
+  expose ZC_TRAVEL_ROOT_INCH;
+  expose ZC_BOOKING_INCH_M;
+  expose ZC_BOOKING_SUPPL_M;
+}

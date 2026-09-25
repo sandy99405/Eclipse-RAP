@@ -1,0 +1,5 @@
+@EndUserText.label: 'Flight Service'
+define service Zflight_sapilya {
+  expose ZI_Connection_SAPilya;
+  expose ZI_FLIGHT_INCH_R;
+}

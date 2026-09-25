@@ -1,0 +1,14 @@
+managed implementation in class zbp_srt_i_bill_item unique;
+strict ( 2 );
+
+define behavior for ZSRT_I_BILL_ITEM //alias <alias_name>
+persistent table zsrt_bill_item
+lock master
+authorization master ( instance )
+//etag master <field_name>
+{
+  create ( authorization : global );
+  update;
+  delete;
+  field ( readonly ) Billid;
+}

@@ -1,0 +1,23 @@
+managed implementation in class zbp_srt_i_task_head unique;
+strict ( 2 );
+
+define behavior for ZSRT_I_TASK_HEAD //alias <alias_name>
+persistent table zsrt_head_tab
+lock master
+authorization master ( none )
+//etag master <field_name>
+{
+  create ( authorization : none );
+  update;
+  delete;
+  field ( readonly, numbering : managed ) TaskUuid;
+
+  mapping for zsrt_head_tab{
+     TaskUuid = task_uuid;
+     Taskid   = task_id;
+     Title    = title;
+     Description = description;
+     OverallStatus = overallstatus;
+
+  }
+}
