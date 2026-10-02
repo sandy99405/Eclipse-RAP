@@ -536,70 +536,70 @@ CLASS lhc__Travel IMPLEMENTATION.
 
   METHOD ValidOverallStatus.
 
-    READ ENTITY IN LOCAL MODE zi_travel_root_inch
-    FIELDS ( OverallStatus )
-    WITH CORRESPONDING #( keys )
-    RESULT DATA(lt_result).
-
-    LOOP AT lt_result ASSIGNING FIELD-SYMBOL(<lfs_result>).
-
-      APPEND VALUE #( %tky = <lfs_result>-%tky ) TO failed-_travel.
-
-      APPEND VALUE #(  %tky = <lfs_result>-%tky
-                       %msg = NEW zcl_message_class(
-                                 textid = zcl_message_class=>standard_message
-                                 severity = if_abap_behv_message=>severity-error
-                                 status = <lfs_result>-OverallStatus
-                              )
-                       %element-OverallStatus = if_abap_behv=>mk-on
-                    ) TO reported-_travel.
-
-    ENDLOOP.
+*    READ ENTITY IN LOCAL MODE zi_travel_root_inch
+*    FIELDS ( OverallStatus )
+*    WITH CORRESPONDING #( keys )
+*    RESULT DATA(lt_result).
+*
+*    LOOP AT lt_result ASSIGNING FIELD-SYMBOL(<lfs_result>).
+*
+*      APPEND VALUE #( %tky = <lfs_result>-%tky ) TO failed-_travel.
+*
+*      APPEND VALUE #(  %tky = <lfs_result>-%tky
+*                       %msg = NEW zcl_message_class(
+*                                 textid = zcl_message_class=>standard_message
+*                                 severity = if_abap_behv_message=>severity-error
+*                                 status = <lfs_result>-OverallStatus
+*                              )
+*                       %element-OverallStatus = if_abap_behv=>mk-on
+*                    ) TO reported-_travel.
+*
+*    ENDLOOP.
   ENDMETHOD.
 
 
   METHOD validCust.
 
-    READ ENTITY IN LOCAL MODE zi_travel_root_inch
-    FIELDS ( customerId )
-    WITH CORRESPONDING  #( keys )
-    RESULT DATA(lt_result).
-
-    DATA: lt_temp TYPE SORTED TABLE OF /dmo/customer WITH UNIQUE KEY customer_id.
-
-    lt_temp = CORRESPONDING #( lt_result DISCARDING DUPLICATES MAPPING customer_id = CustomerId ).
-    DELETE lt_temp WHERE customer_id IS INITIAL.
-
-    SELECT
-      FROM /dmo/customer
-      FIELDS customer_id
-      FOR ALL ENTRIES IN @lt_temp
-      WHERE customer_id = @lt_temp-Customer_Id
-      INTO TABLE @DATA(lt_cust_db).
-
-    IF sy-subrc = 0.
-
-      LOOP AT lt_result ASSIGNING FIELD-SYMBOL(<lfs_result>).
-
-        IF <lfs_result>-CustomerId IS INITIAL
-         OR line_exists( lt_cust_db[ customer_id = <lfs_result>-CustomerId ] ).
-
-          APPEND VALUE #( %tky = <lfs_result>-%tky )
-           TO failed-_travel.
-
-          APPEND VALUE #( %tky = <lfs_result>-%tky
-                          %msg = NEW zcl_message_class(
-                               textid = zcl_message_class=>customer_unkown
-                               severity = if_abap_behv_message=>severity-error
-                               customer_id = <lfs_result>-CustomerId
-                            )
-                          %element-customerid = <lfs_result>-CustomerId
-                       )
-           TO reported-_travel.
-
-        ENDIF.
-      ENDLOOP.
-    ENDIF.
+*    READ ENTITY IN LOCAL MODE zi_travel_root_inch
+*    FIELDS ( customerId )
+*    WITH CORRESPONDING  #( keys )
+*    RESULT DATA(lt_result).
+*
+*    DATA: lt_temp TYPE SORTED TABLE OF /dmo/customer WITH UNIQUE KEY customer_id.
+*
+*    lt_temp = CORRESPONDING #( lt_result DISCARDING DUPLICATES MAPPING customer_id = CustomerId ).
+*    DELETE lt_temp WHERE customer_id IS INITIAL.
+*
+*    SELECT
+*      FROM /dmo/customer
+*      FIELDS customer_id
+*      FOR ALL ENTRIES IN @lt_temp
+*      WHERE customer_id = @lt_temp-Customer_Id
+*      INTO TABLE @DATA(lt_cust_db).
+*
+*    IF sy-subrc = 0.
+*
+*      LOOP AT lt_result ASSIGNING FIELD-SYMBOL(<lfs_result>).
+*
+*        IF <lfs_result>-CustomerId IS INITIAL
+*         OR line_exists( lt_cust_db[ customer_id = <lfs_result>-CustomerId ] ).
+*
+*          APPEND VALUE #( %tky = <lfs_result>-%tky )
+*           TO failed-_travel.
+*
+*          APPEND VALUE #( %tky = <lfs_result>-%tky
+*                          %msg = NEW zcl_message_class(
+*                               textid = zcl_message_class=>customer_unkown
+*                               severity = if_abap_behv_message=>severity-error
+*                               customer_id = <lfs_result>-CustomerId
+*                            )
+*                          %element-customerid = <lfs_result>-CustomerId
+*                       )
+*           TO reported-_travel.
+*
+*        ENDIF.
+*      ENDLOOP.
+*    ENDIF.
 
   ENDMETHOD.
 
