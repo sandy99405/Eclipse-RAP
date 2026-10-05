@@ -97,7 +97,10 @@ CLASS lsc_zi_travel_root_inch IMPLEMENTATION.
 
 ENDCLASS.
 
-CLASS lhc__Travel DEFINITION INHERITING FROM cl_abap_behavior_handler.
+CLASS ltcl_managed DEFINITION DEFERRED FOR TESTING.
+CLASS lhc__Travel DEFINITION INHERITING FROM cl_abap_behavior_handler
+FRIENDS ltcl_managed.
+
   PRIVATE SECTION.
 
     METHODS get_instance_authorizations FOR INSTANCE AUTHORIZATION

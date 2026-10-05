@@ -18,11 +18,18 @@ early numbering
 
     field (readonly) TravelId, LastChangedAt, LastChangedBy, CreatedAt, CreatedBy;
     field (mandatory:create) AgencyId, CustomerId, OverallStatus;
+    field (recommendations) CustomerId;
+    recommendation function getRecommendedCustomer;
     action ( features : instance ) AcceptTravel result [1] $self;
     action ( features : instance ) RejectTravel result [1] $self;
 
 //    action AcceptTravel result [1] $self;
 //    action RejectTravel result [1] $self;
+
+    side effects {
+        recommendation function getRecommendedCustomer
+        executed on field AgencyId;
+    }
 
     factory action CopyTravel [1];
 

@@ -2,6 +2,7 @@
 @AccessControl.authorizationCheck: #NOT_REQUIRED
 @EndUserText.label: 'Bill Item Interface'
 @Metadata.ignorePropagatedAnnotations: true
+@Workflow.enabledFor: [ #CUSTOM_TASK_ATTRIBUTES ]
 define root view entity ZSRT_I_BILL_ITEM as select from zsrt_bill_item
 {  
    key billid as Billid,
