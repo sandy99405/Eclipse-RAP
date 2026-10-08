@@ -539,25 +539,28 @@ CLASS lhc__Travel IMPLEMENTATION.
 
   METHOD ValidOverallStatus.
 
-*    READ ENTITY IN LOCAL MODE zi_travel_root_inch
-*    FIELDS ( OverallStatus )
-*    WITH CORRESPONDING #( keys )
-*    RESULT DATA(lt_result).
-*
-*    LOOP AT lt_result ASSIGNING FIELD-SYMBOL(<lfs_result>).
-*
-*      APPEND VALUE #( %tky = <lfs_result>-%tky ) TO failed-_travel.
-*
-*      APPEND VALUE #(  %tky = <lfs_result>-%tky
-*                       %msg = NEW zcl_message_class(
-*                                 textid = zcl_message_class=>standard_message
-*                                 severity = if_abap_behv_message=>severity-error
-*                                 status = <lfs_result>-OverallStatus
-*                              )
-*                       %element-OverallStatus = if_abap_behv=>mk-on
-*                    ) TO reported-_travel.
-*
-*    ENDLOOP.
+    READ ENTITY IN LOCAL MODE zi_travel_root_inch
+    FIELDS ( OverallStatus )
+    WITH CORRESPONDING #( keys )
+    RESULT DATA(lt_result).
+
+    LOOP AT lt_result ASSIGNING FIELD-SYMBOL(<lfs_result>).
+
+      IF <lfs_result>-OverallStatus NE 'O' OR <lfs_result>-OverallStatus NE 'A'
+           OR <lfs_result>-OverallStatus = 'X'.
+        APPEND VALUE #( %tky = <lfs_result>-%tky ) TO failed-_travel.
+
+        APPEND VALUE #(  %tky = <lfs_result>-%tky
+                         %msg = NEW /dmo/cm_flight_messages(
+                                    textid = /dmo/cm_flight_messages=>status_invalid
+                                    status = <lfs_result>-OverallStatus
+                                    severity = if_abap_behv_message=>severity-error
+                                 )
+                         %element-OverallStatus = if_abap_behv=>mk-on
+                      ) TO reported-_travel.
+
+      ENDIF.
+    ENDLOOP.
   ENDMETHOD.
 
 

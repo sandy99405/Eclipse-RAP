@@ -11,8 +11,8 @@ etag master LastChangedAt
 early numbering
 {
     create(authorization : global);
-    update;
-    delete;
+    update(authorization : none );
+    delete(authorization : update );
 
  //   side effects{ field BookingFee affects field TotalPrice; }
 
