@@ -139,6 +139,8 @@ FRIENDS ltcl_managed.
 
     METHODS calculatetotalprice FOR DETERMINE ON MODIFY
        keys FOR _travel~calculatetotalprice.
+    METHODS getrecommendedcustomer FOR READ
+      keys FOR FUNCTION _travel~getrecommendedcustomer RESULT result.
 
 
 
@@ -716,6 +718,9 @@ CLASS lhc__Travel IMPLEMENTATION.
     EXECUTE CalcTotPrice
     FROM CORRESPONDING #( keys ).
 
+  ENDMETHOD.
+
+  METHOD getRecommendedCustomer.
   ENDMETHOD.
 
 ENDCLASS.

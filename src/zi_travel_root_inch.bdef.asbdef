@@ -28,7 +28,7 @@ early numbering
 
     side effects {
         recommendation function getRecommendedCustomer
-        executed on field AgencyId;
+        executed on field AgencyId, field _Booking.CustomerId;
     }
 
     factory action CopyTravel [1];
